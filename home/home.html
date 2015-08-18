@@ -1,0 +1,35 @@
+<style>
+    .delete-btn { font-size:14px; background-color:red; }
+    .buy-btn { font-size:14px; background-color:green; }
+    .sm-btn { font-size:16px;}
+</style>
+
+<div class="home">
+  <h1 id="logo"><img src="/home/auth0_logo_final_blue_RGB.png" /></h1>
+  <h2>Welcome {{auth.profile.nickname}} to sell your pets!</h2>
+
+  <div ng-repeat="pet in pets track by pet.id">
+    <div class="row">
+	   <!--"id": 1, "type": "dog", "price": 249.99-->
+        <div class="col-md-6 col-md-offset-3">We have a {{pet.type}} is for sale for {{pet.price}}</div>
+        <div class="col-md-2" style='text-align:left;'>
+            <button ng-show="isAdmin" class="btn delete-btn" ng-click="removePet(pet.id)">remove</button>
+            <button ng-show="!isAdmin && !pet.isSold" class="btn buy-btn" ng-click="buyPet(pet.id)">Buy!</button>
+            <label ng-show="pet.isSold">sold</label>
+       </div>
+    </div>
+  </div>
+  <br />
+
+  <button class="btn sm-btn" ng-click="addPets()" ng-hide="adding || !isAdmin">Add Pets</button>
+
+  <div ng-show="adding">
+        <label>Pet Type:&nbsp;</label><input type="text" ng-model="newpet.type"></input><br />
+        <label>Pet Price:&nbsp;</label><input type="text" ng-model="newpet.price"></input> <br />
+        <button class="bnt sm-btn" ng-click="savePet()">save</button>
+        <button class="bnt  sm-btn" ng-click="cancelAddPet()">cancel</button>
+  </div>
+
+  <br /><br />
+  <button class="btn btn-warning sm-btn" ng-click="logout()">Logout</button>
+</div>
